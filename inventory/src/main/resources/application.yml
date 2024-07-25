@@ -1,0 +1,15 @@
+spring.application.name: catalogo
+server.port: 8084
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/catalogo
+    username: topicos
+    password: topicos
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+   
