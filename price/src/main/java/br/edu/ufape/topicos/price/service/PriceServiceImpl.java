@@ -1,6 +1,7 @@
 package br.edu.ufape.topicos.price.service;
 
 import br.edu.ufape.topicos.price.service.exceptions.PriceAlreadyExistsException;
+import br.edu.ufape.topicos.price.service.exceptions.PriceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.edu.ufape.topicos.price.model.Price;
@@ -21,12 +22,17 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price getPriceById(Long id) {
-        return priceRepository.findById(id).orElse(null);
+        //verifica se o preço existe se não existir lança uma exceção
+        return priceRepository.findById(id).orElseThrow(() -> new PriceNotFoundException("Price with id ["+ id + "] not found."));
     }
 
     @Override
     public Price getPriceByProductId(Long productId) {
-        return priceRepository.findByProductId(productId);
+        Price price = priceRepository.findByProductId(productId);
+        if(price == null) {
+            throw new PriceNotFoundException("Price for product with id ["+ productId + "] not found.");
+        }
+        return price;
     }
 
     @Override
