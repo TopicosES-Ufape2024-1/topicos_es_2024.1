@@ -22,7 +22,6 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price getPriceById(Long id) {
-        //verifica se o preço existe se não existir lança uma exceção
         return priceRepository.findById(id).orElseThrow(() -> new PriceNotFoundException("Price with id ["+ id + "] not found."));
     }
 
