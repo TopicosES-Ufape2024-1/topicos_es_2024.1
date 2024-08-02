@@ -6,15 +6,11 @@ import br.edu.ufape.topicos.price.controller.response.CalculatePriceResponse;
 import br.edu.ufape.topicos.price.controller.response.PriceResponse;
 import br.edu.ufape.topicos.price.facade.PriceFacade;
 import br.edu.ufape.topicos.price.model.Price;
-import br.edu.ufape.topicos.price.service.PriceService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +21,6 @@ public class PriceController {
     @Autowired
     private PriceFacade priceFacade;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping
     public List<PriceResponse> getAllPrices() {
