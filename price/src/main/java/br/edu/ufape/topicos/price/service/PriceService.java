@@ -1,5 +1,6 @@
 package br.edu.ufape.topicos.price.service;
 
+import br.edu.ufape.topicos.price.controller.response.CalculatePriceResponse;
 import br.edu.ufape.topicos.price.model.Price;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,5 @@ public interface PriceService {
     Price getPriceByProductId(Long productId);
     Price savePrice(Price price);
     void deletePrice(Long id);
+    CalculatePriceResponse calculateFinalPrice(Long productId, int quantity);
 }

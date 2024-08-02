@@ -1,5 +1,9 @@
 package br.edu.ufape.topicos.price.service;
 
+import br.edu.ufape.topicos.price.controller.response.CalculatePriceResponse;
+import br.edu.ufape.topicos.price.discounts.Discount;
+import br.edu.ufape.topicos.price.discounts.MoreOrEqual10ItemsDiscount;
+import br.edu.ufape.topicos.price.discounts.MoreOrEqual500ValueDiscount;
 import br.edu.ufape.topicos.price.service.exceptions.PriceAlreadyExistsException;
 import br.edu.ufape.topicos.price.service.exceptions.PriceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +26,22 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price getPriceById(Long id) {
-        return priceRepository.findById(id).orElseThrow(() -> new PriceNotFoundException("Price with id ["+ id + "] not found."));
+        return priceRepository.findById(id).orElseThrow(() -> new PriceNotFoundException("Price with id [" + id + "] not found."));
     }
 
     @Override
     public Price getPriceByProductId(Long productId) {
         Price price = priceRepository.findByProductId(productId);
-        if(price == null) {
-            throw new PriceNotFoundException("Price for product with id ["+ productId + "] not found.");
+        if (price == null) {
+            throw new PriceNotFoundException("Price for product with id [" + productId + "] not found.");
         }
         return price;
     }
 
     @Override
     public Price savePrice(Price price) {
-        if(priceRepository.findByProductId(price.getProductId()) != null) {
-            throw new PriceAlreadyExistsException("Price for product with id ["+ price.getProductId() + "] already exists.");
+        if (priceRepository.findByProductId(price.getProductId()) != null) {
+            throw new PriceAlreadyExistsException("Price for product with id [" + price.getProductId() + "] already exists.");
         }
         return priceRepository.save(price);
     }
@@ -45,5 +49,21 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public void deletePrice(Long id) {
         priceRepository.deleteById(id);
+    }
+
+    @Override
+    public CalculatePriceResponse calculateFinalPrice(Long productId, int quantity) {
+        Price price = priceRepository.findByProductId(productId);
+        if (price == null) {
+            throw new PriceNotFoundException("Price not found for product ID " + productId);
+        }
+        Discount discountCalculator = new MoreOrEqual500ValueDiscount(
+                new MoreOrEqual10ItemsDiscount(null)
+        );
+        return new CalculatePriceResponse(
+            price.getValue() * quantity - discountCalculator.calculateDiscount(price, quantity),
+            price.getValue() * quantity,
+            discountCalculator.calculateDiscount(price, quantity)
+        );
     }
 }

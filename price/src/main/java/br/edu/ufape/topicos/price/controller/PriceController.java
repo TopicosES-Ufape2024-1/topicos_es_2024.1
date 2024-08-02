@@ -1,12 +1,16 @@
 package br.edu.ufape.topicos.price.controller;
 
+import br.edu.ufape.topicos.price.controller.request.CalculatePriceRequest;
 import br.edu.ufape.topicos.price.controller.request.PriceRequest;
+import br.edu.ufape.topicos.price.controller.response.CalculatePriceResponse;
 import br.edu.ufape.topicos.price.controller.response.PriceResponse;
 import br.edu.ufape.topicos.price.facade.PriceFacade;
 import br.edu.ufape.topicos.price.model.Price;
+import br.edu.ufape.topicos.price.service.PriceService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,4 +57,9 @@ public class PriceController {
         return Map.of("message", "Price deleted successfully");
     }
 
+    @GetMapping("/calculate")
+    public ResponseEntity<CalculatePriceResponse> calculateFinalPrice(@Valid @RequestBody CalculatePriceRequest request){
+        CalculatePriceResponse finalPrice = priceFacade.calculateFinalPrice(request.productId(), request.quantity());
+        return ResponseEntity.ok(finalPrice);
+    }
 }

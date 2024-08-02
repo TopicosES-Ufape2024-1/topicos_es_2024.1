@@ -1,5 +1,6 @@
 package br.edu.ufape.topicos.price.facade;
 
+import br.edu.ufape.topicos.price.controller.response.CalculatePriceResponse;
 import br.edu.ufape.topicos.price.model.Price;
 import br.edu.ufape.topicos.price.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,9 @@ public class PriceFacade {
 
     public void deletePrice(Long id) {
         priceService.deletePrice(id);
+    }
+
+    public CalculatePriceResponse calculateFinalPrice(Long productId, int quantity){
+        return priceService.calculateFinalPrice(productId, quantity);
     }
 }
