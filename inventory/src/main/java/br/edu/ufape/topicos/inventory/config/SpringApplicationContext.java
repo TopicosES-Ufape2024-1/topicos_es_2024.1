@@ -1,4 +1,4 @@
-package br.edu.ufape.topicos.price.config;
+package br.edu.ufape.topicos.inventory.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -1,4 +1,4 @@
-package br.edu.ufape.topicos.price.config;
+package br.edu.ufape.topicos.inventory.config;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;

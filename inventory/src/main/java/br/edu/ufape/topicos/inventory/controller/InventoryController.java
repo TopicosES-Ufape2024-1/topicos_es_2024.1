@@ -13,37 +13,49 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
-    
+
     @Autowired
     private InventoryFacade inventoryFacade;
 
-    @Autowired 
-    private ModelMapper modelMapper;
-
     @GetMapping
-    public List<InventoryResponse> getAllInventories(){
-        return inventoryFacade.getAllInventories().stream().map(InventoryResponse::new).toList();
+    public ResponseEntity<List<InventoryResponse>> getAllInventory() {
+        List<Inventory> inventories = inventoryFacade.getAllInventory();
+        List<InventoryResponse> responses = inventories.stream()
+                .map(InventoryResponse::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/{id}")
-    public InventoryResponse getInventoryById(@PathVariable Long id){
-        Inventory inventory = inventoryFacade.getInventoryById(id);
-        return new InventoryResponse(inventory);
+    public ResponseEntity<InventoryResponse> getInventoryById(@PathVariable Long id) {
+        Optional<Inventory> inventory = inventoryFacade.getInventoryById(id);
+        return inventory.map(value -> ResponseEntity.ok(new InventoryResponse(value)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Map<String, String> createInventory(@Valid @RequestBody InventoryRequest inventoryRequest){
-        new InventoryResponse(inventoryFacade.saveInventory(inventoryRequest.toInventory()));
-        return Map.of("message", "Inventory created successfully");        
+    public ResponseEntity<InventoryResponse> createInventory(@RequestBody InventoryRequest request) {
+        Inventory inventory = request.toInventory();
+        Inventory savedInventory = inventoryFacade.createInventory(inventory);
+        return ResponseEntity.ok(new InventoryResponse(savedInventory));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<InventoryResponse> updateInventory(@PathVariable Long id, @RequestBody InventoryRequest request) {
+        Inventory inventoryDetails = request.toInventory();
+        Inventory updatedInventory = inventoryFacade.updateInventory(id, inventoryDetails);
+        return ResponseEntity.ok(new InventoryResponse(updatedInventory));
     }
 
     @DeleteMapping("/{id}")
-    public Map<String, String> deleteInventory(@PathVariable Long id){
+    public ResponseEntity<Void> deleteInventory(@PathVariable Long id) {
         inventoryFacade.deleteInventory(id);
-        return Map.of("message", "Inventory deleted successfully");
+        return ResponseEntity.ok().build();
     }
 }

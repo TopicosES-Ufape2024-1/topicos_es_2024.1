@@ -9,5 +9,6 @@ import br.edu.ufape.topicos.inventory.model.Inventory;
 
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
-    Inventory findByInventory(Long inventoryId);
+    List<Inventory> findByProductId(Long productId);
+    List<Inventory> findByWarehouseId(Long warehouseId);
 }

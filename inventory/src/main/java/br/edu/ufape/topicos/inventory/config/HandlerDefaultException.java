@@ -1,4 +1,4 @@
-package br.edu.ufape.topicos.price.config;
+package br.edu.ufape.topicos.inventory.config;
 
 import java.util.HashMap;
 import java.util.Map;

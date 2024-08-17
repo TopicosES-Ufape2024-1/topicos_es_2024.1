@@ -1,10 +1,10 @@
-spring.application.name: catalogo
+spring.application.name: inventory
 server.port: 8084
 
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://127.0.0.1:5432/catalogo
+    url: jdbc:postgresql://127.0.0.1:5432/inventory
     username: topicos
     password: topicos
   jpa:

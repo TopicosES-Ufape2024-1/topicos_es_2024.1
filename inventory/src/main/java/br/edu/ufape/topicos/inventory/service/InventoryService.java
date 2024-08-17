@@ -4,12 +4,19 @@ import br.edu.ufape.topicos.inventory.model.Inventory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class InventoryService {
-    List<Inventory> getAllInventories();
-    Inventory getInventoryById(Long id);
+public interface InventoryService {
+    List<Inventory> findAllInventory();
+
+    Optional<Inventory> findInventoryById(Long id);
+
+    List<Inventory> findInventoryByProductId(Long productId);
+
+    List<Inventory> findInventoryByWarehouseId(Long warehouseId);
+
     Inventory saveInventory(Inventory inventory);
-    void deletedInventory(Long id);
-    
+
+    void deleteInventory(Long id);
 }
