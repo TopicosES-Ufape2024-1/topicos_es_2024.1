@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  discovery:
+    build: ./discovery
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+
+  catalogo:
+    build: ./catalogo
+    ports:
+      - "8081:8080"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://catalogo-db:5432/catalogodb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=yourpassword
+      - SERVER_PORT=8080
+    depends_on:
+      - catalogo-db
+
+  catalogo-db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=catalogodb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=yourpassword
+    volumes:
+      - catalogo-db-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  price:
+    build: ./price
+    ports:
+      - "8082:8080"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://price-db:5432/pricedb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=yourpassword
+      - SERVER_PORT=8080
+    depends_on:
+      - price-db
+
+  price-db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=pricedb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=yourpassword
+    volumes:
+      - price-db-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  inventory:
+    build: ./inventory
+    ports:
+      - "8083:8080"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://inventory-db:5432/inventorydb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=yourpassword
+      - SERVER_PORT=8080
+    depends_on:
+      - inventory-db
+
+  inventory-db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=inventorydb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=yourpassword
+    volumes:
+      - inventory-db-data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+
+volumes:
+  catalogo-db-data:
+  price-db-data:
+  inventory-db-data:
