@@ -57,20 +57,13 @@ public class PriceServiceImpl implements PriceService {
         if (price == null) {
             throw new PriceNotFoundException("Price not found for product ID " + productId);
         }
-        
-        // Encadeamento de descontos
-        Discount combinedDiscounts = new MoreOrEqual500ValueDiscount(
+        Discount discountCalculator = new MoreOrEqual500ValueDiscount(
                 new MoreOrEqual10ItemsDiscount(null)
         );
-        
-        double totalAmount = price.getValue() * quantity;
-        double discountAmount = combinedDiscounts.calculateDiscount(price, quantity);
-        double finalPrice = totalAmount - discountAmount;
-        
         return new CalculatePriceResponse(
-            finalPrice,
-            totalAmount,
-            discountAmount
+            price.getValue() * quantity - discountCalculator.calculateDiscount(price, quantity),
+            price.getValue() * quantity,
+            discountCalculator.calculateDiscount(price, quantity)
         );
     }
 }

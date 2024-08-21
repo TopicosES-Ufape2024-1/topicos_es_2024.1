@@ -2,8 +2,7 @@ package br.edu.ufape.topicos.price.discounts;
 
 import br.edu.ufape.topicos.price.model.Price;
 
-// This class is responsible for calculating the discount based on the total value of the purchase
-public class MoreOrEqual500ValueDiscount extends Discount{
+public class MoreOrEqual500ValueDiscount extends Discount {
 
     public MoreOrEqual500ValueDiscount(Discount next) {
         super(next);
@@ -11,8 +10,9 @@ public class MoreOrEqual500ValueDiscount extends Discount{
 
     @Override
     public double calculateDiscount(Price price, int quantity) {
-        if (price.getValue() * quantity >= 500) {
-            return price.getValue() * 0.05 * quantity;
+        // Ajuste na condição para aplicar desconto apenas se o valor exceder 500
+        if (price.getValue() * quantity > 500) {
+            return price.getValue() * 0.05 * quantity; // 5% de desconto
         }
         if (next != null) {
             return next.calculateDiscount(price, quantity);

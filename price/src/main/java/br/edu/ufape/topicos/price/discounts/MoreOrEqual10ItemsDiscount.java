@@ -2,7 +2,7 @@ package br.edu.ufape.topicos.price.discounts;
 
 import br.edu.ufape.topicos.price.model.Price;
 
-public class MoreOrEqual10ItemsDiscount extends Discount{
+public class MoreOrEqual10ItemsDiscount extends Discount {
 
     public MoreOrEqual10ItemsDiscount(Discount next) {
         super(next);
@@ -11,7 +11,7 @@ public class MoreOrEqual10ItemsDiscount extends Discount{
     @Override
     public double calculateDiscount(Price price, int quantity) {
         if (quantity >= 10) {
-            return price.getValue() * 0.1 * quantity; // 10% discount
+            return price.getValue() * 0.1 * quantity; // 10% de desconto
         }
         if (next != null) {
             return next.calculateDiscount(price, quantity);
