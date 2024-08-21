@@ -21,40 +21,40 @@ public class PriceController {
     @Autowired
     private PriceFacade priceFacade;
 
+
     @GetMapping
     public List<PriceResponse> getAllPrices() {
-        return priceFacade.getAllPrices().stream()
-                .map(PriceResponse::new)
-                .toList();
+        return priceFacade.getAllPrices().stream().map(PriceResponse::new).toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PriceResponse> getPriceById(@PathVariable Long id) {
+    public PriceResponse getPriceById(@PathVariable Long id) {
         Price price = priceFacade.getPriceById(id);
-        return ResponseEntity.ok(new PriceResponse(price));
+        return new PriceResponse(price);
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<PriceResponse> getPriceByProductId(@PathVariable Long productId) {
+    public PriceResponse getPriceByProductId(@PathVariable Long productId) {
         Price price = priceFacade.getPriceByProductId(productId);
-        return ResponseEntity.ok(new PriceResponse(price));
+        return new PriceResponse(price);
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> createPrice(@Valid @RequestBody PriceRequest priceRequest) {
-        priceFacade.savePrice(priceRequest.toPrice());
-        return ResponseEntity.ok(Map.of("message", "Price created successfully"));
+    public Map<String, String> createPrice(@Valid @RequestBody PriceRequest priceRequest) {
+        new PriceResponse(priceFacade.savePrice(priceRequest.toPrice()));
+        return Map.of("message", "Price created successfully");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> deletePrice(@PathVariable Long id) {
+    public Map<String, String> deletePrice(@PathVariable Long id) {
         priceFacade.deletePrice(id);
-        return ResponseEntity.ok(Map.of("message", "Price deleted successfully"));
+        return Map.of("message", "Price deleted successfully");
     }
 
-    @PostMapping("/calculate")
-    public ResponseEntity<CalculatePriceResponse> calculateFinalPrice(@Valid @RequestBody CalculatePriceRequest request) {
+    @GetMapping("/calculate")
+    public ResponseEntity<CalculatePriceResponse> calculateFinalPrice(@Valid @RequestBody CalculatePriceRequest request){
         CalculatePriceResponse finalPrice = priceFacade.calculateFinalPrice(request.productId(), request.quantity());
         return ResponseEntity.ok(finalPrice);
     }
+
 }

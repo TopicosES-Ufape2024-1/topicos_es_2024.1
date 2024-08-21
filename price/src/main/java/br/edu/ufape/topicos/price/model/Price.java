@@ -14,4 +14,31 @@ public class Price {
     private long id;
     private Long productId;
     private Double value;
+    private double amount;
+
+   public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    
+	public Long getProductId() {
+		return productId;
+	}
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+	public Double getValue() {
+		return value;
+	}
+	public void setValue(Double value) {
+		this.value = value;
+	}
+
+	public void setId(Long productId) {
+		this.id = productId;
+	}
+
 }

@@ -3,6 +3,9 @@ package br.edu.ufape.topicos.price.facade;
 import br.edu.ufape.topicos.price.controller.response.CalculatePriceResponse;
 import br.edu.ufape.topicos.price.model.Price;
 import br.edu.ufape.topicos.price.service.PriceService;
+import br.edu.ufape.topicos.price.discounts.Discount;
+import br.edu.ufape.topicos.price.discounts.MoreOrEqual10ItemsDiscount;
+import br.edu.ufape.topicos.price.discounts.MoreOrEqual500ValueDiscount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +38,16 @@ public class PriceFacade {
     }
 
     public CalculatePriceResponse calculateFinalPrice(Long productId, int quantity){
-        return priceService.calculateFinalPrice(productId, quantity);
+        Price price = priceService.getPriceByProductId(productId);
+
+        // Criação da cadeia de políticas de preço
+        Discount discountChain = new MoreOrEqual10ItemsDiscount(
+                                    new MoreOrEqual500ValueDiscount(null));
+        
+        double discount = discountChain.calculateDiscount(price, quantity);
+        double totalWithoutDiscount = price.getValue() * quantity;
+        double totalWithDiscount = totalWithoutDiscount - discount;
+
+        return new CalculatePriceResponse(totalWithDiscount, totalWithoutDiscount, discount);
     }
 }
