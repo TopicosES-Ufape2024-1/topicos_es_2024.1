@@ -8,6 +8,17 @@ services:
     networks:
       - microservices-network
 
+  gateway:
+    build: ./gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - microservices-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery
+
   catalogo:
     build: ./catalogo
     ports:
@@ -19,6 +30,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=yourpassword
       - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - catalogo-db
 
@@ -44,6 +56,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=yourpassword
       - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - price-db
 
@@ -69,6 +82,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=yourpassword
       - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - inventory-db
 
