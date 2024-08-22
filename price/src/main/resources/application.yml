@@ -12,4 +12,20 @@ spring:
       ddl-auto: update
     show-sql: true
     database: postgresql
-   
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    registryFetchIntervalSeconds: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+
+---
+spring.config.activate.on-profile: docker
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
