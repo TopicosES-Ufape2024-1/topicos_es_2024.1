@@ -18,20 +18,30 @@ logging:
     org.springframework.cloud.gateway: TRACE
 
 spring.cloud.gateway.routes:
-- id: catalogo
-  uri: http://localhost:8080/catalogo
+- id: produto-route
+  uri: lb://catalogo
   predicates:
-    - Path=/catalogo/**
+    - Path=/produto/**
+
+- id: categoria-route
+  uri: lb://catalogo
+  predicates:
+    - Path=/categoria/**
 
 - id: price
   uri: lb://price
   predicates:
     - Path=/price/**
 
-- id: inventory
+- id: inventory-inventory
   uri: lb://inventory
   predicates:
     - Path=/inventory/**
+
+- id: inventory-warehouse
+  uri: lb://inventory
+  predicates:
+    - Path=/warehouse/**
 
 - id: eureka-web-start
   uri: http://${app.eureka-server}:8761
