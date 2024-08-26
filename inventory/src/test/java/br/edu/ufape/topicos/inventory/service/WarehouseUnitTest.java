@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import br.edu.ufape.topicos.inventory.model.Warehouse;
 import br.edu.ufape.topicos.inventory.repository.WarehouseRepository;
 
-class WarehouseServiceImplTest {
+class WarehouseUnitTest {
 
     @InjectMocks
     private WarehouseServiceImpl warehouseService;

@@ -1,4 +1,4 @@
-package br.edu.ufage.topicos.inventory.service;
+package br.edu.ufape.topicos.inventory.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
-import br.edu.ufape.topicos.inventory.service.InventoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import br.edu.ufape.topicos.inventory.model.Inventory;
 import br.edu.ufape.topicos.inventory.repository.InventoryRepository;
 
-class InventoryTest {
+class InventoryUnitTest {
 
     @InjectMocks
     private InventoryServiceImpl inventoryService;
