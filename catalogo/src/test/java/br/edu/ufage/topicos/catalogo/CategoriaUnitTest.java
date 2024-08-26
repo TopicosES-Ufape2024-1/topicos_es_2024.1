@@ -14,7 +14,7 @@ import br.edu.ufage.topicos.catalogo.cadastro.CadastroCategoria;
 import br.edu.ufage.topicos.catalogo.repositorio.RepositorioCategoria;
 import br.edu.ufage.topicos.catalogo.cadastro.RegistroDuplicadoException;
 
-class CadastroCategoriaTest {
+class CategoriaUnitTest {
 
     @InjectMocks
     private CadastroCategoria cadastroCategoria;

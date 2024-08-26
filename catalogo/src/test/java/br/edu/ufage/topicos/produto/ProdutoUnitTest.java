@@ -1,4 +1,4 @@
-package br.edu.ufage.topicos.catalogo;
+package br.edu.ufage.topicos.produto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -17,7 +17,7 @@ import br.edu.ufage.topicos.catalogo.basica.Produto;
 import br.edu.ufage.topicos.catalogo.cadastro.CadastroProduto;
 import br.edu.ufage.topicos.catalogo.repositorio.RepositorioProduto;
 
-class CadastroProdutoTest {
+class ProdutoUnitTest {
 
     @InjectMocks
     private CadastroProduto cadastroProduto;
