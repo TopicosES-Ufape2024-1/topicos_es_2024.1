@@ -3,6 +3,8 @@ package br.edu.ufage.topicos.catalogo.cadastro;
 import java.util.List;
 import java.util.Optional;
 
+import br.edu.ufage.topicos.catalogo.cadastro.mensagem.Event;
+import br.edu.ufage.topicos.catalogo.cadastro.mensagem.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ import br.edu.ufage.topicos.catalogo.repositorio.RepositorioProduto;
 public class CadastroProduto implements InterfaceCadastroProduto {
 	@Autowired
 	private RepositorioProduto repositorioProduto;
+
+	@Autowired
+	private Publisher publisher;
 
 	@Override
 	public List<Produto> listarProdutos(String descricao) {
@@ -26,7 +31,10 @@ public class CadastroProduto implements InterfaceCadastroProduto {
 
 	@Override
 	public  Produto salvarProduto(Produto entity) {
-		return repositorioProduto.save(entity);
+		Produto produto = repositorioProduto.save(entity);
+		Event<Long, Long> evt = new Event(Event.Type.CREATE, produto.getId(), "teste");
+		publisher.sendEvent(evt);
+		return produto;
 	}
 
 	@Override
