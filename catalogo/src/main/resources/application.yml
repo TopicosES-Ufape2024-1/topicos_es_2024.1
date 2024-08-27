@@ -13,6 +13,18 @@ spring:
     show-sql: true
     database: postgresql
 
+  cloud.stream:
+    defaultBinder: rabbit
+    default.contentType: application/json
+    bindings.inventory-out-0:
+      destination: inventory
+
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
 eureka:
   client:
     serviceUrl:
@@ -29,3 +41,9 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery:8761/eureka/
+
+spring.rabbitmq:
+  host: http://message
+  port: 5672
+  username: guest
+  password: guest

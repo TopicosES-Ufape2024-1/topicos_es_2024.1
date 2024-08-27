@@ -15,12 +15,12 @@ public class Publisher {
     @Autowired
     private StreamBridge streamBridge;
 
-    public void SendEvent() {
-        Event<Integer, Long> evt = new Event(Event.Type.CREATE, 1, 2);
-        SendMessage("inventory-out-0", evt);
+    public void sendEvent(Event evt) {
+//        Event<Integer, Long> evt = new Event(Event.Type.CREATE, 1, 2);
+        sendMessage("inventory-out-0", evt);
     }
 
-    private void SendMessage(String bindingName, Event event) {
+    private void sendMessage(String bindingName, Event event) {
         Message message = MessageBuilder.withPayload(event)
                 .setHeader("partitionKey", event.getKey())
                 .build();

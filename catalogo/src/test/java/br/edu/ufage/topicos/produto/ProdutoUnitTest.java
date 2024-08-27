@@ -6,6 +6,8 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
+import br.edu.ufage.topicos.catalogo.cadastro.mensagem.Event;
+import br.edu.ufage.topicos.catalogo.cadastro.mensagem.Publisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,6 +26,10 @@ class ProdutoUnitTest {
 
     @Mock
     private RepositorioProduto repositorioProduto;
+
+    @Mock
+    private Publisher publisher;
+
     private boolean result;
 
     @BeforeEach
