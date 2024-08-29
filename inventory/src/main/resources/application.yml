@@ -61,3 +61,10 @@ spring.rabbitmq:
   port: 5672
   username: guest
   password: guest
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/topicos-realm

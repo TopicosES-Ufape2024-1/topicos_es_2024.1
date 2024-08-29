@@ -5,4 +5,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ecommerce</name>
+  <modules>
+    <module>auth</module>
+    <module>catalogo</module>
+    <module>inventory</module>
+    <module>discovery</module>
+    <module>gateway</module>
+  </modules>
+
 </project>
