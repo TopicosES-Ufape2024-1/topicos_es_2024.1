@@ -102,6 +102,10 @@ services:
     ports:
         - "5672:5672"
         - "15672:15672"
+    networks:
+      - microservices-network
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
 
 networks:
   microservices-network:
@@ -110,3 +114,4 @@ volumes:
   catalogo-db-data:
   price-db-data:
   inventory-db-data:
+  rabbitmq-data:

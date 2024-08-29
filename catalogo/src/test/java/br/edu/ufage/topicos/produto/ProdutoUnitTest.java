@@ -18,6 +18,7 @@ import br.edu.ufage.topicos.catalogo.basica.Categoria;
 import br.edu.ufage.topicos.catalogo.basica.Produto;
 import br.edu.ufage.topicos.catalogo.cadastro.CadastroProduto;
 import br.edu.ufage.topicos.catalogo.repositorio.RepositorioProduto;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 class ProdutoUnitTest {
 
@@ -27,8 +28,10 @@ class ProdutoUnitTest {
     @Mock
     private RepositorioProduto repositorioProduto;
 
+//    @Mock
+//    private Publisher publisher;
     @Mock
-    private Publisher publisher;
+    private RabbitTemplate rabbitTemplate;
 
     private boolean result;
 

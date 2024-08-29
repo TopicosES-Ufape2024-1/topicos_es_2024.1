@@ -22,7 +22,9 @@ public class ProdutoRequest {
 
     public Produto converterParaClasseBasica() {
         ModelMapper modelMapper = (ModelMapper) SpringApplicationContext.getBean("modelMapper");
-        return modelMapper.map(this, Produto.class);
+        Produto produto = modelMapper.map(this, Produto.class);
+        produto.setId(0); // ou `null`, dependendo do tipo
+        return produto;
     }
 
 

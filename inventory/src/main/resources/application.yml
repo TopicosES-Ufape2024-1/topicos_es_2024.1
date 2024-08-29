@@ -1,5 +1,5 @@
 spring.application.name: inventory
-server.port: 8084
+server.port: 8085
 
 spring:
   datasource:
@@ -7,6 +7,7 @@ spring:
     url: jdbc:postgresql://127.0.0.1:5432/inventory
     username: topicos
     password: topicos
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,24 +24,24 @@ eureka:
     leaseRenewalIntervalInSeconds: 5
     leaseExpirationDurationInSeconds: 5
 
-spring.cloud.function.definition: consumeMessage
+#spring.cloud.function.definition: consumeMessage
 
-spring.cloud.stream:
-  defaultBinder: rabbit
-  default.contentType: application/json
-  bindings.consumeMessage-in-0:
-    destination: inventory
-    group: inventoriesGroup
+#spring.cloud.stream:
+#  defaultBinder: rabbit
+#  default.contentType: application/json
+#  bindings.consumeMessage-in-0:
+#    destination: inventory
+#    group: inventoriesGroup
 
-spring.cloud.stream.bindings.consumeMessage-in-0.consumer:
-  maxAttempts: 3
-  backOffInitialInterval: 500
-  backOffMaxInterval: 1000
-  backOffMultiplier: 2.0
-
-spring.cloud.stream.rabbit.bindings.consumeMessage-in-0.consumer:
-  autoBindDlq: true
-  republishToDlq: true
+#spring.cloud.stream.bindings.messageConsumer-in-0.consumer:
+#  maxAttempts: 3
+#  backOffInitialInterval: 500
+#  backOffMaxInterval: 1000
+#  backOffMultiplier: 2.0
+#
+#spring.cloud.stream.rabbit.bindings.messageConsumer-in-0.consumer:
+#  autoBindDlq: true
+#  republishToDlq: true
 
 spring.rabbitmq:
   host: 127.0.0.1
@@ -57,6 +58,9 @@ eureka:
       
 spring.rabbitmq:
   host: message
+  port: 5672
+  username: guest
+  password: guest
 
 spring:
   security:
@@ -64,4 +68,3 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/topicos-realm
-
