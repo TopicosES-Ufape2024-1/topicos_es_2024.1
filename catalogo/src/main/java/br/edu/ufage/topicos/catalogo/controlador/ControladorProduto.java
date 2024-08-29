@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import br.edu.ufage.topicos.catalogo.basica.Produto;
@@ -30,16 +31,16 @@ public class ControladorProduto {
     @Autowired
     private PrecoCliente precoCliente;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
     @PostMapping("/produto")
+    @PreAuthorize("hasRole('admin')")
     Produto cadastrarProduto(@Valid @RequestBody ProdutoRequest newObj) {
         Produto prod = newObj.converterParaClasseBasica();
         return catalogo.salvarProduto(prod);
     }
 
     @GetMapping("/produto")
+    @PreAuthorize("hasRole('user') or hasRole('admin')")
     List<ProdutoResponse> listarProdutos() {
         List<ProdutoResponse> response = new ArrayList<>();
         for (Produto p : catalogo.listarProdutos()) {
@@ -49,11 +50,13 @@ public class ControladorProduto {
     }
 
     @GetMapping("/produto/{id}")
+    @PreAuthorize("hasRole('user') or hasRole('admin')")
     ProdutoResponse carregarProduto(@PathVariable long id) {
         Optional<Produto> produto = catalogo.encontrarProdutoId(id);
         return produto.map(ProdutoResponse::new).orElse(null);
     }
 
+    @PreAuthorize("hasRole('user') or hasRole('admin')")
     @GetMapping("/produto/{id}/preco")
     public ResponseEntity<ProdutoComPrecoDTO> carregarProdutoComPreco(@PathVariable long id) {
         try {
@@ -78,6 +81,7 @@ public class ControladorProduto {
     }
 
     @DeleteMapping("/produto/{id}")
+    @PreAuthorize("hasRole('admin')")
     void apagarProduto(@PathVariable long id) {
         catalogo.apagarProduto(id);
     }

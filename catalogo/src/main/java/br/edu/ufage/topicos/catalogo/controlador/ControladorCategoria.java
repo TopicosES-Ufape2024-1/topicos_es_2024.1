@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +25,14 @@ public class ControladorCategoria {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	
+
+	@PreAuthorize("hasRole('admin')")
 	@PostMapping("/categoria")
 	Categoria cadastrarCategoria (@Valid @RequestBody CategoriaRequest newObj) {
 		return catalogo.salvarCategoria(newObj.converterParaClasseBasica());
 	}
-	
-	
+
+	@PreAuthorize("hasRole('user') or hasRole('admin')")
 	@GetMapping("/categoria")
 	List<CategoriaResponse> listarCategorias() {
 		List<CategoriaResponse> response = new ArrayList<CategoriaResponse>();
@@ -39,7 +40,8 @@ public class ControladorCategoria {
 			response.add(new CategoriaResponse(c));
 		return response;
 	}
-	
+
+	@PreAuthorize("hasRole('user') or hasRole('admin')")
 	@GetMapping("/categoria/{id}")
 	CategoriaResponse carregarCategoria(@PathVariable long id) {
 		return new CategoriaResponse(catalogo.encontrarCategoria(id));
