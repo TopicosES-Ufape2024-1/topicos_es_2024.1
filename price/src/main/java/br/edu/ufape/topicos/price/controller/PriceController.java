@@ -11,10 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
-
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +24,6 @@ public class PriceController {
 
     @GetMapping
     public List<PriceResponse> getAllPrices() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Jwt principal = (Jwt) authentication.getPrincipal();
-        System.out.println(principal.getClaimAsString("email"));
-        System.out.println(principal.getId());
-        System.out.println(authentication.getAuthorities());
-        System.out.println(authentication.getCredentials());
-        System.out.println(authentication.getName());
-
         return priceFacade.getAllPrices().stream().map(PriceResponse::new).toList();
     }
 

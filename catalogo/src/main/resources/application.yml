@@ -7,7 +7,6 @@ spring:
     url: jdbc:postgresql://127.0.0.1:5432/catalogo
     username: topicos
     password: topicos
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -37,7 +36,6 @@ eureka:
     leaseExpirationDurationInSeconds: 5
 
 ---
-
 spring.config.activate.on-profile: docker
 eureka:
   client:
@@ -49,10 +47,3 @@ spring.rabbitmq:
   port: 5672
   username: guest
   password: guest
-
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8080/realms/topicos-realm

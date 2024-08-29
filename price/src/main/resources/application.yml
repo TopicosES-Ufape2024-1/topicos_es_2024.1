@@ -29,10 +29,3 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery:8761/eureka/
-
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8080/realms/topicos-realm

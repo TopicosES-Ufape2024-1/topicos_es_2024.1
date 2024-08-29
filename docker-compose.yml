@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   discovery:
     build: ./discovery
@@ -100,12 +98,26 @@ services:
   message:
     image: "rabbitmq:3-management"
     ports:
-        - "5672:5672"
-        - "15672:15672"
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - microservices-network
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+
+  keyclock:
+    image: quay.io/keycloak/keycloak:25.0.4
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "8084:8080"
+    networks:
+      - microservices-network
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    command:
+      [ "start-dev"]
 
 networks:
   microservices-network:
@@ -115,3 +127,4 @@ volumes:
   price-db-data:
   inventory-db-data:
   rabbitmq-data:
+  keycloak-data:
