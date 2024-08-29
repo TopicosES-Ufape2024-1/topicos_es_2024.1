@@ -6,6 +6,9 @@ import br.edu.ufape.topicos.inventory.facade.InventoryFacade;
 import br.edu.ufape.topicos.inventory.model.Inventory;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,14 @@ public class InventoryController {
 
     @GetMapping
     public ResponseEntity<List<InventoryResponse>> getAllInventory() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt principal = (Jwt) authentication.getPrincipal();
+        System.out.println(principal.getClaimAsString("email"));
+        System.out.println(principal.getId());
+        System.out.println(authentication.getAuthorities());
+        System.out.println(authentication.getCredentials());
+        System.out.println(authentication.getName());
+
         List<Inventory> inventories = inventoryFacade.getAllInventory();
         List<InventoryResponse> responses = inventories.stream()
                 .map(InventoryResponse::new)
