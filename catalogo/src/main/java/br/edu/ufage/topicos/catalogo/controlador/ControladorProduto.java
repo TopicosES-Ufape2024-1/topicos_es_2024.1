@@ -35,7 +35,8 @@ public class ControladorProduto {
 
     @PostMapping("/produto")
     Produto cadastrarProduto(@Valid @RequestBody ProdutoRequest newObj) {
-        return catalogo.salvarProduto(newObj.converterParaClasseBasica());
+        Produto prod = newObj.converterParaClasseBasica();
+        return catalogo.salvarProduto(prod);
     }
 
     @GetMapping("/produto")

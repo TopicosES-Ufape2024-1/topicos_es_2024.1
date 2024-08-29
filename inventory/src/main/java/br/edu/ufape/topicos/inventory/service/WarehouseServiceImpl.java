@@ -15,7 +15,15 @@ public class WarehouseServiceImpl implements WarehouseService {
     private WarehouseRepository warehouseRepository;
 
     public List<Warehouse> findAllWarehouses() {
-        return warehouseRepository.findAll();
+        List<Warehouse> all = warehouseRepository.findAll();
+        if (all.isEmpty()) {
+            Warehouse warehouse = new Warehouse();
+            warehouse.setName("Default Warehouse");
+            warehouse.setLocation("Default Location");
+            warehouseRepository.save(warehouse);
+            all = warehouseRepository.findAll();
+        }
+        return all;
     }
 
     public Optional<Warehouse> findWarehouseById(Long id) {
