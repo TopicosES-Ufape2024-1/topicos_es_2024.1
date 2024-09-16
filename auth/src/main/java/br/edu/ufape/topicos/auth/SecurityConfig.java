@@ -1,4 +1,4 @@
-package br.edu.ufage.topicos.catalogo.security;
+package br.edu.ufape.topicos.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,10 +14,13 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http
+                .csrf(csrf -> csrf.disable())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(
-                        jwt->jwt.jwtAuthenticationConverter(new JWTConverter())
-                ));
+                        jwt -> jwt.jwtAuthenticationConverter(new JWTConverter())
+                ))
+                .authorizeHttpRequests(authz -> authz.requestMatchers("/intranet/**").permitAll()
+                        .anyRequest().authenticated());
         return http.build();
     }
 }
