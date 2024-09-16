@@ -6,8 +6,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8084/realms/topicos
-          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+          issuer-uri: http://keycloak:8080/realms/topicos
+          jwk-set-uri: http://keycloak:8080/realms/topicos/protocol/openid-connect/certs
 
   datasource:
     driverClassName: org.postgresql.Driver
@@ -19,6 +19,7 @@ spring:
       ddl-auto: update
     show-sql: true
     database: postgresql
+
 
   #  cloud.stream:
   #    defaultBinder: rabbit
@@ -42,8 +43,37 @@ eureka:
     leaseRenewalIntervalInSeconds: 5
     leaseExpirationDurationInSeconds: 5
 
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        security: DEBUG
+#        oauth2: DEBUG
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      produtoPreco:
+        minimum-number-of-calls: 2
+        sliding-window-size: 4
+  timelimiter:
+    instances:
+      produtoPreco:
+        timeout-duration: 2s
+
+preco:
+  service:
+    url: http://localhost:8091/intranet/price/product/
+
 ---
 spring.config.activate.on-profile: docker
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/topicos
+          jwk-set-uri: http://keycloak:8080/realms/topicos/protocol/openid-connect/certs
 eureka:
   client:
     serviceUrl:
@@ -54,3 +84,7 @@ spring.rabbitmq:
   port: 5672
   username: guest
   password: guest
+
+preco:
+  service:
+    url: http://price:8080/intranet/price/product/
