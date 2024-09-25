@@ -98,7 +98,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-messaging</artifactId>
         </dependency>
-
+		<dependency>
+			<groupId>br.edu.ufape.topicos</groupId>
+			<artifactId>auth</artifactId>
+			<version>0.0.1</version>
+		</dependency>
     </dependencies>
 
 	<build>
