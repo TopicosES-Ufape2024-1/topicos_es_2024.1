@@ -1,5 +1,5 @@
 spring.application.name: price
-server.port: 8084
+server.port: 8091
 
 spring:
   datasource:
@@ -12,6 +12,12 @@ spring:
       ddl-auto: update
     show-sql: true
     database: postgresql
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/topicos
+          jwk-set-uri: http://keycloak:8080/realms/topicos/protocol/openid-connect/certs
 
 eureka:
   client:
@@ -29,3 +35,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery:8761/eureka/
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/topicos
+          jwk-set-uri: http://keycloak:8080/realms/topicos/protocol/openid-connect/certs
