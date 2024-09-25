@@ -22,17 +22,14 @@ import jakarta.validation.Valid;
 public class ControladorCategoria {
 	@Autowired
 	private Catalogo catalogo;
-	
-	@Autowired
-	private ModelMapper modelMapper;
 
-	@PreAuthorize("hasRole('admin')")
+	@PreAuthorize("hasRole('manager')")
 	@PostMapping("/categoria")
 	Categoria cadastrarCategoria (@Valid @RequestBody CategoriaRequest newObj) {
 		return catalogo.salvarCategoria(newObj.converterParaClasseBasica());
 	}
 
-	@PreAuthorize("hasRole('user') or hasRole('admin')")
+	@PreAuthorize("hasRole('user') or hasRole('manager')")
 	@GetMapping("/categoria")
 	List<CategoriaResponse> listarCategorias() {
 		List<CategoriaResponse> response = new ArrayList<CategoriaResponse>();
@@ -41,7 +38,7 @@ public class ControladorCategoria {
 		return response;
 	}
 
-	@PreAuthorize("hasRole('user') or hasRole('admin')")
+	@PreAuthorize("hasRole('user') or hasRole('manager')")
 	@GetMapping("/categoria/{id}")
 	CategoriaResponse carregarCategoria(@PathVariable long id) {
 		return new CategoriaResponse(catalogo.encontrarCategoria(id));

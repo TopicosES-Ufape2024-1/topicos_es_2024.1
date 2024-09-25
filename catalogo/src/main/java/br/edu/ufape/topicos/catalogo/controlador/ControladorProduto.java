@@ -30,14 +30,14 @@ public class ControladorProduto {
 
 
     @PostMapping("/produto")
-    @PreAuthorize("hasRole('gerente')")
+    @PreAuthorize("hasRole('manager')")
     Produto cadastrarProduto(@Valid @RequestBody ProdutoRequest newObj) {
         Produto prod = newObj.converterParaClasseBasica();
         return catalogo.salvarProduto(prod);
     }
 
     @GetMapping("/produto")
-    @PreAuthorize("hasRole('user') or hasRole('gerente')")
+    @PreAuthorize("hasRole('user') or hasRole('manager')")
     List<ProdutoResponse> listarProdutos(Authentication authentication) {
         System.out.println("Roles: " + authentication.getAuthorities());
         List<ProdutoResponse> response = new ArrayList<>();
@@ -48,13 +48,13 @@ public class ControladorProduto {
     }
 
     @GetMapping("/produto/{id}")
-    @PreAuthorize("hasRole('user') or hasRole('gerente')")
+    @PreAuthorize("hasRole('user') or hasRole('manager')")
     ProdutoResponse carregarProduto(@PathVariable long id) {
         Optional<Produto> produto = catalogo.encontrarProdutoId(id);
         return produto.map(ProdutoResponse::new).orElse(null);
     }
 
-    @PreAuthorize("hasRole('user') or hasRole('gerente')")
+    @PreAuthorize("hasRole('user') or hasRole('manager')")
     @GetMapping("/produto/{id}/preco")
     public ResponseEntity<ProdutoComPrecoDTO> carregarProdutoComPreco(@PathVariable long id) {
         try {
@@ -80,7 +80,7 @@ public class ControladorProduto {
     }
 
     @DeleteMapping("/produto/{id}")
-    @PreAuthorize("hasRole('gerente')")
+    @PreAuthorize("hasRole('manager')")
     void apagarProduto(@PathVariable long id) {
         catalogo.apagarProduto(id);
     }
