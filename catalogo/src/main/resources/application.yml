@@ -56,6 +56,9 @@ resilience4j:
       produtoPreco:
         minimum-number-of-calls: 2
         sliding-window-size: 4
+        wait-duration-in-open-state: 60000
+        failure-rate-threshold: 50
+
   timelimiter:
     instances:
       produtoPreco:

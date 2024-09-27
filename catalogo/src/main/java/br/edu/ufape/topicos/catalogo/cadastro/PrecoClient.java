@@ -24,20 +24,23 @@ public class PrecoClient {
     @Autowired
     private RestTemplate restTemplate;
 
-//    @TimeLimiter(name = "produtoPreco")
-//    @Retry(name = "produtoPreco")
     @CircuitBreaker(name = "produtoPreco", fallbackMethod = "fallbackGetPrecoByProdutoId")
     public PrecoDTO getPrecoByProdutoId(Long produtoId) {
         String url = precoServiceUrl + produtoId;
         var response = restTemplate.getForObject(url, PrecoDTO.class);
-
+        System.out.println("----------------------------------------------------");
+        System.out.println("Sucesso ao buscar preço do produto");
         System.out.println("Adicionando no cache");
+        System.out.println("----------------------------------------------------");
         CACHE.put(produtoId, response);
         return response;
     }
 
     public PrecoDTO fallbackGetPrecoByProdutoId(Long produtoId, Throwable throwable) {
-        System.out.println("Buscando no cache");
+        System.out.println("----------------------------------------------------");
+        System.out.println("FALLBACK");
+        System.out.println("Buscando valor no cache");
+        System.out.println("----------------------------------------------------");
         if(CACHE.containsKey(produtoId)){
             return CACHE.get(produtoId);
         }
