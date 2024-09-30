@@ -8,6 +8,10 @@ This project is designed as a study case to explore and implement the **microser
 
 The system provides key functionalities like product management, price determination, inventory control, and user authentication, aiming to showcase how different microservices can collaborate to form a cohesive system while maintaining loose coupling, scalability, and resilience.
 
+## :mortar_board: Academic Context
+
+This project was developed as part of the course **Tópicos Especiais em Engenharia de Software - 2024.1**, taught by **Prof. Igor Vanderlei** at **UFAPE (Universidade Federal do Agreste de Pernambuco)**.
+
 ### :dart: Goals:
 - Understand and apply the microservices architecture principles.
 - Implement communication between microservices using **REST** and **RabbitMQ**.
